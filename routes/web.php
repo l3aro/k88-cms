@@ -14,3 +14,23 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'Admin'
+], function () {
+
+    Route::group(['prefix' => 'products'], function() {
+        Route::get('', 'ProductController@index');
+        Route::get('create', 'ProductController@create');
+        Route::post('', 'ProductController@store');
+        Route::get('{product}/edit', 'ProductController@edit');
+        Route::put('{product}', 'ProductController@update');
+        Route::delete('{product}', 'ProductController@destroy');
+        Route::get('{product}', 'ProductController@show');
+    });
+
+    Route::resource('users', 'UserController');
+
+});
+
