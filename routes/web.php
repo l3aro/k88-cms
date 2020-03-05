@@ -20,7 +20,18 @@ Route::group([
     'namespace' => 'Admin'
 ], function () {
 
-    Route::group(['prefix' => 'products'], function() {
+    Route::resource('categories', 'CategoryController');
+    Route::get('', 'DashboardController');
+    Route::get('login', 'LoginController@showLoginForm');
+    Route::post('login', 'LoginController@login');
+    Route::post('logout', 'LoginController@logout');
+    Route::group(['prefix' => 'orders'], function () {
+        Route::get('', 'OrderController@index');
+        Route::get('processed', 'OrderController@processed');
+        Route::get('{order}/edit', 'OrderController@edit');
+        Route::put('{order}', 'OrderController@update');
+    });
+    Route::group(['prefix' => 'products'], function () {
         Route::get('', 'ProductController@index');
         Route::get('create', 'ProductController@create');
         Route::post('', 'ProductController@store');
@@ -29,8 +40,5 @@ Route::group([
         Route::delete('{product}', 'ProductController@destroy');
         Route::get('{product}', 'ProductController@show');
     });
-
     Route::resource('users', 'UserController');
-
 });
-
