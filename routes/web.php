@@ -11,8 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Client'], function () {
+
+    Route::get('', 'HomeController@index');
+    Route::get('about', 'HomeController@about');
+    Route::get('contact', 'HomeController@contact');
+
+    Route::group(['prefix' => 'cart'], function () {
+        Route::get('', 'CartController@index');
+        Route::get('checkout', 'CartController@checkout');
+        Route::get('complete', 'CartController@complete');
+    });
+
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('', 'ProductController@index');
+        Route::get('{category}', 'ProductController@index');
+        Route::get('{category}/{product}', 'CartController@detail');
+    });
 });
 
 Route::group([
