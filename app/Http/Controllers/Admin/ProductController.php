@@ -9,12 +9,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        //
+        return view('admin.products.index');
     }
 
     public function create()
     {
-        //
+        return view('admin.products.create');
     }
 
     public function store()
@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function edit()
     {
-        //
+        return view('admin.products.edit');
     }
 
     public function update()

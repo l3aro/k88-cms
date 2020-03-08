@@ -9,12 +9,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        //
+        return view('admin.users.index');
     }
 
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     public function store()
@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function edit()
     {
-        //
+        return view('admin.users.edit');
     }
 
     public function update()

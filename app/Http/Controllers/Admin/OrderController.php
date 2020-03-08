@@ -9,17 +9,17 @@ class OrderController extends Controller
 {
     public function index()
     {
-        //
+        return view('admin.orders.index');
     }
 
     public function processed()
     {
-        //
+        return view('admin.orders.processed');
     }
 
     public function edit()
     {
-        //
+        return view('admin.orders.edit');
     }
 
     public function update()
