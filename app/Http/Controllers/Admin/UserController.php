@@ -17,9 +17,13 @@ class UserController extends Controller
         return view('admin.users.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique',
+            'name' => 'required',
+            'password' => 'required|confirmed',
+        ]);
     }
 
     public function edit()
@@ -27,9 +31,13 @@ class UserController extends Controller
         return view('admin.users.edit');
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique',
+            'name' => 'required',
+            'password' => 'required|confirmed',
+        ]);
     }
 
     public function destroy()

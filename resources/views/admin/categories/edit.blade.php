@@ -26,21 +26,17 @@
                     <div class="row">
                         <div class="col-md-7">
 
-                            @component('admin.layouts.components.alert')
-                            @slot('type', 'success')
-                            @slot('stroke', 'checkmark')
-                            Đã thêm danh mục thành công!
-                            @endcomponent
-
+                            @if ($errors->any())
                             @component('admin.layouts.components.alert')
                             @slot('type', 'danger')
                             @slot('stroke', 'cancel')
-                            Đã thêm danh mục thành công!
+                            {{ $errors->first() }}
                             @endcomponent
+                            @endif
 
                             <div class="form-group">
                                 <label for="">Danh mục cha:</label>
-                                <select class="form-control" name="parent">
+                                <select class="form-control" name="parent_id">
                                     <option>----ROOT----</option>
                                     <option>Nam</option>
                                     <option>---|Áo khoác nam</option>

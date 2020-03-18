@@ -17,9 +17,12 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'parent_id' => 'required',
+            'name' => 'required'
+        ]);
     }
 
     public function edit()
@@ -27,9 +30,12 @@ class CategoryController extends Controller
         return view('admin.categories.edit');
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'parent_id' => 'required',
+            'name' => 'required'
+        ]);
     }
 
     public function destroy()
