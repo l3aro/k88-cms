@@ -4,12 +4,43 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('admin.users.index');
+        // DB::table('users')->whereName('Baro')->update([
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        //     'email' => 'barok@mail.com',
+        //     'name' => 'Baro Kiteer'
+        // ]);
+        $users = DB::table('users')
+            // ->whereName('Baro')
+            // ->limit(2)
+            // ->offset(1)
+            // ->skip(1)
+            // ->take(2)
+            ->select(['id', 'name', 'email', 'address'])
+            ->get();
+        // $user = DB::table('users')
+        //     ->whereName('Baro')
+        //     ->first();
+        // print_r($users);
+        // DB::table('users')->insert([
+        //     'name' => 'Boss',
+        //     'email' => 'boss@mail.com',
+        //     'password' => '123123123',
+        // ]);
+        // $user = DB::table('users')->where('email', '=', 'boss@mail.com')->first();
+        // print_r($user);
+        // die;
+        debugbar()->info($users[0]->name);
+        // debugbar()->info($user->name);
+        return view('admin.users.index', [
+            'users' => $users
+        ]);
     }
 
     public function create()

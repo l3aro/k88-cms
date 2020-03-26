@@ -37,8 +37,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->address }}</td>
+                                        <td>{{ $user->phone ?? '' }}</td>
+                                        <td>{{ $user->created_at ?? '' }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
+                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
 
-                                    <tr>
+                                    {{-- <tr>
                                         <td>1</td>
                                         <td>Admin@gmail.com</td>
                                         <td>Nguyễn thế phúc</td>
@@ -49,19 +63,7 @@
                                             <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
                                             <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Admin@gmail.com</td>
-                                        <td>Nguyễn thế phúc</td>
-                                        <td>Thường tín</td>
-                                        <td>0356653300</td>
-                                        <td>1</td>
-                                        <td>
-                                            <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
-                                        </td>
-                                    </tr>
+                                    </tr> --}}
 
                                 </tbody>
                             </table>
