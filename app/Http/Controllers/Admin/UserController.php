@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,13 +17,12 @@ class UserController extends Controller
         //     'email' => 'barok@mail.com',
         //     'name' => 'Baro Kiteer'
         // ]);
-        $users = DB::table('users')
+        $users = User::select(['id', 'name', 'email', 'address'])
             // ->whereName('Baro')
             // ->limit(2)
             // ->offset(1)
             // ->skip(1)
             // ->take(2)
-            ->select(['id', 'name', 'email', 'address'])
             ->get();
         // $user = DB::table('users')
         //     ->whereName('Baro')

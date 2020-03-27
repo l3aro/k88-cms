@@ -22,7 +22,7 @@
                 @endif
 
                 <div class="panel-body">
-                    <form action="/admin/products/any" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/products/{{ $product->id }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -39,21 +39,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mã sản phẩm</label>
-                                    <input type="text" name="sku" class="form-control" value="SP01">
+                                    <input type="text" name="sku" class="form-control" value="{{ $product->sku }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Tên sản phẩm</label>
-                                    <input type="text" name="name" class="form-control" value="Sản phẩm 1">
+                                    <input type="text" name="name" class="form-control" value="{{ $product->name }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Giá sản phẩm (Giá chung)</label>
-                                    <input type="number" name="price" class="form-control" value="150000">
+                                    <input type="number" name="price" class="form-control" value="{{ $product->price }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Sản phẩm có nổi bật</label>
                                     <select name="featured" class="form-control">
-                                        <option value="0">Không</option>
-                                        <option selected value="1">Có</option>
+                                        <option value="0" {{ $product->featured ? '' : 'selected' }}>Không</option>
+                                        <option value="1" {{ $product->featured ? 'selected' : '' }}>Có</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -73,7 +73,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Thông tin</label>
-                                    <textarea name="info" style="width: 100%;height: 100px;"></textarea>
+                                    <textarea name="detail" style="width: 100%;height: 100px;">
+                                        {{ $product->detail }}
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +83,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Miêu tả</label>
-                                    <textarea id="editor" name="describe" style="width: 100%;height: 100px;"></textarea>
+                                    <textarea id="editor" name="description" style="width: 100%;height: 100px;">
+                                        {{ $product->description }}
+                                    </textarea>
                                 </div>
                                 <button class="btn btn-success" name="add-product" type="submit">Sửa sản phẩm</button>
                                 <button class="btn btn-danger" type="reset">Huỷ bỏ</button>
