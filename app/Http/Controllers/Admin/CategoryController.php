@@ -8,11 +8,23 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $categories = $this->getSubCategories(0);
+        // Category::where('parent_id', 0)->get();
         return view('admin.categories.index', [
-            'categories' => Category::get()
+            'categories' => $categories
         ]);
+    }
+
+    private function getSubCategories($parentId)
+    {
+        $categories = Category::whereParentId($parentId)->get();
+        $categories->map(function ($category) {
+            $category->sub = $this->getSubCategories($category->id);
+            return $category;
+        });
+        return $categories;
     }
 
     public function create()
@@ -30,7 +42,6 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
         $category->save();
-
     }
 
     public function edit()
