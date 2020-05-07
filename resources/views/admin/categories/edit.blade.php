@@ -26,31 +26,31 @@
                     <div class="row">
                         <div class="col-md-7">
 
-                            @if ($errors->any())
-                            @component('admin.layouts.components.alert')
-                            @slot('type', 'danger')
-                            @slot('stroke', 'cancel')
-                            {{ $errors->first() }}
-                            @endcomponent
-                            @endif
+                            <form action="/admin/categories/{{ $category->id }}" method="POST">
+                                @csrf
+                                @method("PUT")
+                                @if ($errors->any())
+                                @component('admin.layouts.components.alert')
+                                @slot('type', 'danger')
+                                @slot('stroke', 'cancel')
+                                {{ $errors->first() }}
+                                @endcomponent
+                                @endif
 
-                            <div class="form-group">
-                                <label for="">Danh mục cha:</label>
-                                <select class="form-control" name="parent_id">
-                                    <option>----ROOT----</option>
-                                    <option>Nam</option>
-                                    <option>---|Áo khoác nam</option>
-                                    <option>---|---|Áo khoác nam</option>
-                                    <option selected>Nữ</option>
-                                    <option>---|Áo khoác nữ</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Tên Danh mục</label>
-                                <input type="text" class="form-control" name="name" placeholder="Tên danh mục mới"
-                                    value="Áo khoác nữ">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Thêm danh mục</button>
+                                <div class="form-group">
+                                    <label for="">Danh mục cha:</label>
+                                    <select class="form-control" name="parent_id">
+                                        <option>----ROOT----</option>
+                                        @include('admin.categories.option', ['level' => 0])
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tên Danh mục</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Tên danh mục mới"
+                                        value="{{ $category->name }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Thêm danh mục</button>
+                            </form>
                         </div>
                     </div>
                 </div>

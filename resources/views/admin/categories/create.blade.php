@@ -38,11 +38,7 @@
                                     <label for="">Danh mục cha:</label>
                                     <select class="form-control" name="parent_id">
                                         <option value="0" selected>----ROOT----</option>
-                                        <option>Nam</option>
-                                        <option>---|Áo khoác nam</option>
-                                        <option>---|---|Áo khoác nam</option>
-                                        <option>Nữ</option>
-                                        <option>---|Áo khoác nữ</option>
+                                        @include('admin.categories.option', ['level' => 0])
                                     </select>
                                 </div>
                                 <div class="form-group">

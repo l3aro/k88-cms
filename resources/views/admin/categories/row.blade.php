@@ -7,7 +7,7 @@
         {{ $category->name }}
     </span>
     <div class="category-fix">
-        <a class="btn-category btn-primary" href="editcategory.html"><i
+        <a class="btn-category btn-primary" href="/admin/categories/{{ $category->id }}/edit"><i
                 class="fa fa-edit"></i></a>
         <a class="btn-category btn-danger" href="#"><i class="fas fa-times"></i></i></a>
     </div>

@@ -10,18 +10,38 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+        // $arr = [
+        //     [
+        //         'a' => 3,
+        //         'b' => 2,
+        //     ],
+        //     [
+        //         'a' => 5,
+        //         'b' => 2,
+        //     ],
+        // ];
+
+        // foreach ($arr as $key => $value) {
+        //     $arr[$key]['c'] = 5;
+        //     // print_r($value);die;
+        //     // print_r($arr[$key]);die;
+        // }
+        // print_r($arr);die;
         $categories = $this->getSubCategories(0);
+        // print_r($categories->toArray());
         // Category::where('parent_id', 0)->get();
         return view('admin.categories.index', [
             'categories' => $categories
         ]);
     }
 
-    private function getSubCategories($parentId)
+    private function getSubCategories($parentId, $ignoreId = null)
     {
-        $categories = Category::whereParentId($parentId)->get();
-        $categories->map(function ($category) {
-            $category->sub = $this->getSubCategories($category->id);
+        $categories = Category::whereParentId($parentId)
+            ->where('id', '<>', $ignoreId)
+            ->get();
+        $categories->map(function ($category) use($ignoreId) {
+            $category->sub = $this->getSubCategories($category->id, $ignoreId);
             return $category;
         });
         return $categories;
@@ -29,7 +49,8 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = $this->getSubCategories(0);
+        return view('admin.categories.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -42,19 +63,28 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
         $category->save();
+        return redirect('/admin/categories');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        return view('admin.categories.edit');
+        $category = Category::findOrFail($id);
+        $categories = $this->getSubCategories(0, $id);
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
             'parent_id' => 'required',
             'name' => 'required'
         ]);
+
+        $category->fill($request->only(['parent_id', 'name']));
+        // $category->parent_id = $request->parent_id
+        // $category->name = $request->name
+        $category->save();
+        return back()->with('success', 'Category updated.');
     }
 
     public function destroy()
