@@ -51,6 +51,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Thêm danh mục</button>
                             </form>
+                            {{ $category->products()->get()->pluck('name')->implode(' | ') }}
                         </div>
                     </div>
                 </div>

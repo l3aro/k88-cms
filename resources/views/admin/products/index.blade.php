@@ -60,7 +60,7 @@
                                                 {{ $item->quantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
                                             </a>
                                         </td>
-                                        <td>Áo Khoác Nam</td>
+                                        <td>{{ optional($item->category)->name }}</td>
                                         <td>
                                             <a href="/admin/products/{{ $item->id }}/edit" class="btn btn-warning"><i
                                                     class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>

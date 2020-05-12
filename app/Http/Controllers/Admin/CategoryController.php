@@ -69,6 +69,10 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+
+        $products = $category->products()->get();
+        debugbar()->info($products);
+        // Product::where('category_id', $category->id)->get();
         $categories = $this->getSubCategories(0, $id);
         return view('admin.categories.edit', compact('category', 'categories'));
     }
