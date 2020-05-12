@@ -11,7 +11,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('admin.products.index');
+        $products = Product::get();
+        return view('admin.products.index', compact('products'));
     }
 
     public function create()
@@ -23,7 +24,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'sku' => 'required',
+            'sku' => 'required|unique:products',
             'name' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric|min:0',
@@ -38,11 +39,18 @@ class ProductController extends Controller
             'name',
             'price',
             'quantity',
-            'img',
             'featured',
             'detail',
             'description',
         ]);
+
+        if ($request->hasFile('img')) {
+            $imgName = uniqid('vietprok88') . "." . $request->img->getClientOriginalExtension();
+            $destinationDir = public_path('files/images/products/');
+            $request->img->move($destinationDir, $imgName);
+            $input['avatar'] = asset("files/images/products/{$imgName}");
+        }
+
         $product = Product::create($input);
         return redirect("/admin/products/{$product->id}/edit");
     }
@@ -75,8 +83,12 @@ class ProductController extends Controller
         return back();
     }
 
-    public function destroy()
+    public function destroy($product)
     {
-        //
+        $deleted = Product::destroy($product);
+        if ($deleted) {
+            return response()->json([], 204);
+        }
+        return response()->json(['message' => "Sản phẩm cần xoá không tồn tại."], 404);
     }
 }

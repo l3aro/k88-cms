@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Số lượng</label>
-                                    <input type="number" name="quantity" class="form-data">
+                                    <input type="number" name="quantity" class="form-data form-control" value="{{ $product->quantity }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
