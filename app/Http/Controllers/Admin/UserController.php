@@ -17,27 +17,8 @@ class UserController extends Controller
         //     'email' => 'barok@mail.com',
         //     'name' => 'Baro Kiteer'
         // ]);
-        $users = User::select(['id', 'name', 'email', 'address'])
-            // ->whereName('Baro')
-            // ->limit(2)
-            // ->offset(1)
-            // ->skip(1)
-            // ->take(2)
-            ->get();
-        // $user = DB::table('users')
-        //     ->whereName('Baro')
-        //     ->first();
-        // print_r($users);
-        // DB::table('users')->insert([
-        //     'name' => 'Boss',
-        //     'email' => 'boss@mail.com',
-        //     'password' => '123123123',
-        // ]);
-        // $user = DB::table('users')->where('email', '=', 'boss@mail.com')->first();
-        // print_r($user);
-        // die;
+        $users = User::with('roles')->get();
         debugbar()->info($users[0]->name);
-        // debugbar()->info($user->name);
         return view('admin.users.index', [
             'users' => $users
         ]);

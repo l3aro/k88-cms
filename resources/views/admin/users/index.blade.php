@@ -44,7 +44,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->address }}</td>
                                         <td>{{ $user->phone ?? '' }}</td>
-                                        <td>{{ $user->created_at ?? '' }}</td>
+                                        <td>{{ $user->roles->pluck('name')->implode(', ') ?? '' }}</td>
                                         <td>
                                             <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
                                             <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>

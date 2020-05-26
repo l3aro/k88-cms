@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditAvatarOnOrderDetailsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class EditAvatarOnOrderDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::table('order_details', function (Blueprint $table) {
-            $table->string('avatar', 100)->nullable()->change();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class EditAvatarOnOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::table('order_details', function (Blueprint $table) {
-            $table->string('avatar')->nullable()->change();
-        });
+        Schema::dropIfExists('roles');
     }
 }
