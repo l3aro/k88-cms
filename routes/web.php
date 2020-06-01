@@ -13,6 +13,15 @@
 
 Route::group(['namespace' => 'Client'], function () {
 
+    Route::group(['middleware' => 'guest:client'], function () {
+        Route::get('login', 'LoginController@showLoginForm');
+        Route::post('login', 'LoginController@login');
+    });
+
+    Route::group(['middleware' => 'auth:client'], function () {
+        Route::post('logout', 'LoginController@logout');
+    });
+
     Route::get('', 'HomeController@index');
     Route::get('about', 'HomeController@about');
     Route::get('contact', 'HomeController@contact');
@@ -35,25 +44,30 @@ Route::group([
     'namespace' => 'Admin'
 ], function () {
 
-    Route::resource('categories', 'CategoryController');
-    Route::get('', 'DashboardController');
-    Route::get('login', 'LoginController@showLoginForm');
-    Route::post('login', 'LoginController@login');
-    Route::post('logout', 'LoginController@logout');
-    Route::group(['prefix' => 'orders'], function () {
-        Route::get('', 'OrderController@index');
-        Route::get('processed', 'OrderController@processed');
-        Route::get('{order}/edit', 'OrderController@edit');
-        Route::put('{order}', 'OrderController@update');
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
+        Route::post('login', 'LoginController@login');
     });
-    Route::group(['prefix' => 'products'], function () {
-        Route::get('', 'ProductController@index');
-        Route::get('create', 'ProductController@create');
-        Route::post('', 'ProductController@store');
-        Route::get('{product}/edit', 'ProductController@edit');
-        Route::put('{product}', 'ProductController@update');
-        Route::delete('{product}', 'ProductController@destroy');
-        Route::get('{product}', 'ProductController@show');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::resource('categories', 'CategoryController');
+        Route::get('', 'DashboardController');
+        Route::post('logout', 'LoginController@logout');
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('', 'OrderController@index');
+            Route::get('processed', 'OrderController@processed');
+            Route::get('{order}/edit', 'OrderController@edit');
+            Route::put('{order}', 'OrderController@update');
+        });
+        Route::group(['prefix' => 'products'], function () {
+            Route::get('', 'ProductController@index');
+            Route::get('create', 'ProductController@create');
+            Route::post('', 'ProductController@store');
+            Route::get('{product}/edit', 'ProductController@edit');
+            Route::put('{product}', 'ProductController@update');
+            Route::delete('{product}', 'ProductController@destroy');
+            Route::get('{product}', 'ProductController@show');
+        });
+        Route::resource('users', 'UserController');
     });
-    Route::resource('users', 'UserController');
 });

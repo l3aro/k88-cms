@@ -41,6 +41,14 @@ return [
             'provider' => 'users',
         ],
 
+        'client' => [
+            'driver' => 'session',
+            'provider' => 'users'
+        ],
+
+        // baro@Mail.com
+        // 123654
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -68,7 +76,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Entities\User::class,
         ],
 
         // 'users' => [

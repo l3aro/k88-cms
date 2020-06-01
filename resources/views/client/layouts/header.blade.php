@@ -12,6 +12,12 @@
                         <li><a href="/about" class="menu-about">Giới thiệu</a></li>
                         <li><a href="/contact" class="menu-contact">Liên hệ</a></li>
                         <li><a href="/cart" class="menu-cart"><i class="icon-shopping-cart"></i> Giỏ hàng [0]</a></li>
+                        @guest('client')
+                        <li><a href="/login" class="menu-login"> Login</a></li>
+                        @endguest
+                        @auth('client')
+                        <li><a href="/login" class="menu-login"> {{ auth()->guard('client')->user()->name }}</a></li>
+                        @endauth
                     </ul>
                 </div>
             </div>
