@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         $credentials = $request->only(['email', 'password']);
         // $credentials = array_merge($credentials, ['type' => 'admin']);
-        $credentials['type'] = 'admin';
+        // $credentials['type'] = 'admin';
         if (Auth::attempt($credentials)) {
             return redirect('/admin');
         }

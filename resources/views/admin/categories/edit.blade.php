@@ -18,6 +18,11 @@
     </div>
     <!--/.row-->
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        {{ $errors->first() }}
+    </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12">
@@ -40,7 +45,7 @@
                                 <div class="form-group">
                                     <label for="">Danh mục cha:</label>
                                     <select class="form-control" name="parent_id">
-                                        <option>----ROOT----</option>
+                                        <option value="0">----ROOT----</option>
                                         @include('admin.categories.option', ['level' => 0])
                                     </select>
                                 </div>

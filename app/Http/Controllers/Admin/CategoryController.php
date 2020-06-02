@@ -63,6 +63,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
         $category->save();
+        session()->flash('success', 'Đã tạo mới.');
         return redirect('/admin/categories');
     }
 
@@ -88,7 +89,7 @@ class CategoryController extends Controller
         // $category->parent_id = $request->parent_id
         // $category->name = $request->name
         $category->save();
-        return back()->with('success', 'Category updated.');
+        return redirect('/admin/categories')->with('success', 'Đã cập nhật.');
     }
 
     public function destroy()
