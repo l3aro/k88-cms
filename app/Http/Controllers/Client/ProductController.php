@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -9,11 +10,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('client.product.index');
+        $products = Product::paginate();
+        return view('client.product.index', compact('products'));
     }
 
-    public function detail()
+    public function detail($category, $product)
     {
-        return view('client.product.detail');
+        $product = Product::findOrFail($product);
+        return view('client.product.detail', compact('product'));
     }
 }

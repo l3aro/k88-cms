@@ -30,12 +30,15 @@ Route::group(['namespace' => 'Client'], function () {
         Route::get('', 'CartController@index');
         Route::get('checkout', 'CartController@checkout');
         Route::get('complete', 'CartController@complete');
+        Route::post('add', 'CartController@add');
+        Route::post('remove', 'CartController@remove');
+        Route::post('update', 'CartController@update');
     });
 
     Route::group(['prefix' => 'product'], function () {
         Route::get('', 'ProductController@index');
         Route::get('{category}', 'ProductController@index');
-        Route::get('{category}/{product}', 'CartController@detail');
+        Route::get('{category}/{product}', 'ProductController@detail');
     });
 });
 

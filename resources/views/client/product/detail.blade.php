@@ -19,9 +19,9 @@
                             <form action="product/AddCart" method="post">
 
                                 <div class="desc">
-                                    <h3>Áo Sơ Mi Trắng Kem ASM844</h3>
+                                    <h3>{{ $product->name }}</h3>
                                     <p class="price">
-                                        <span>150,000 đ</span>
+                                        <span>{{ number_format($product->price) }} đ</span>
                                     </p>
                                     <p>thông tin</p>
                                     <p style="text-align: justify;">

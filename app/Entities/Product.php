@@ -18,6 +18,8 @@ class Product extends Model
 
     protected $table = 'products';
 
+    protected $perPage = 5;
+
     public function category()
     {
         return $this->belongsTo(Category::class);

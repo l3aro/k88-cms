@@ -23,7 +23,7 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         $credentials = $request->only($this->username(), 'password');
-        $credentials['type'] = 'client';
+        // $credentials['type'] = 'client';
         return $credentials;
     }
 

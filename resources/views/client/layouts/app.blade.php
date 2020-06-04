@@ -155,6 +155,7 @@
             $(`.menu-${pageId}`).parents('li').addClass('active');
         })
     </script>
+    @stack('js')
 </body>
 
 </html>
