@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use Cart;
 use Illuminate\Http\Request;
@@ -32,12 +33,17 @@ class CartController extends Controller
             'quantity' => 'required|numeric'
         ]);
 
+        $product = Product::findOrFail($request->product_id);
+
         Cart::add([
             'id' => $request->product_id,
-            'name' => $request->name,
-            'price' => $request->price,
+            'name' => $product->name,
+            'price' => $product->price,
             'quantity' => $request->quantity,
-            'attributes' => []
+            'attributes' => [
+                'sku' => $product->sku,
+                'avatar' => $product->avatar
+            ]
         ]);
 
         return response()->json([
@@ -70,6 +76,9 @@ class CartController extends Controller
             ]
         ]);
 
-        return response()->json([], 204);
+        return response()->json([
+            'itemSubTotal' => number_format(Cart::get($request->product_id)->getPriceSum()),
+            'total' => number_format(Cart::getTotal())
+        ], 200);
     }
 }
