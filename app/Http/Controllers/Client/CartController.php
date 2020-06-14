@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Entities\Product;
 use App\Http\Controllers\Controller;
-use Cart;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller

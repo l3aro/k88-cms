@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('t', 'Api\TestController@welcome');
+Route::post('sdfdsfsdf', 'Api\TestController@goodbye');
+// http://127.0.0.1:8000/api/bye

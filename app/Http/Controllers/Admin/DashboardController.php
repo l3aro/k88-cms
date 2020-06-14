@@ -16,6 +16,7 @@ class DashboardController extends Controller
     {
         // session()->put('income', '4000000');
         // session()->forget('income');
+        // dd(config('app.key'));
         return view('admin.dashboard');
     }
 }
