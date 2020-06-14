@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Entities\Order;
 use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -80,5 +81,34 @@ class CartController extends Controller
             'itemSubTotal' => number_format(Cart::get($request->product_id)->getPriceSum()),
             'total' => number_format(Cart::getTotal())
         ], 200);
+    }
+
+    public function store(Request $request)
+    {
+        $validData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $order = Order::create($validData);
+        foreach (Cart::getContent() as $item) {
+            $product = Product::findOrFail($item->id);
+            $order->orderDetails()->create([
+                'product_id' => $product->id,
+                'price' => $product->price,
+                'quantity' => $item->quantity,
+                'avatar' => $product->avatar
+            ]);
+        }
+
+        $cartTotal = Cart::getTotal();
+
+        Cart::clear();
+
+        return redirect('/cart/complete')
+            ->with('cartTotal', $cartTotal)
+            ->with('order', $order);
     }
 }

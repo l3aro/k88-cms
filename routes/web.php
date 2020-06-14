@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::group(['namespace' => 'Client'], function () {
 
     Route::group(['middleware' => 'guest:client'], function () {
@@ -28,6 +30,7 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::group(['prefix' => 'cart'], function () {
         Route::get('', 'CartController@index');
+        Route::post('', 'CartController@store');
         Route::get('checkout', 'CartController@checkout');
         Route::get('complete', 'CartController@complete');
         Route::post('add', 'CartController@add');

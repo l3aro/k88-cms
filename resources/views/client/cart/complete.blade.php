@@ -1,6 +1,8 @@
 @extends('client.layouts.app', ['activePage' => 'home', 'title' => 'Hoàn thành'])
 @section('content')
 <div class="colorlib-shop">
+    @if (session()->has('order'))
+    @php($order = session()->get('order'))
     <div class="container">
         <div class="row row-pb-lg">
             <div class="col-md-10 col-md-offset-1">
@@ -37,15 +39,15 @@
                     <tbody>
                         <tr>
                             <td>Đơn hàng số</td>
-                            <td>: 60235</td>
+                            <td>: {{ $order->id }}</td>
                         </tr>
                         <tr>
                             <td>Ngày mua</td>
-                            <td>: Oct 03, 2017</td>
+                            <td>: {{ $order->created_at }}</td>
                         </tr>
                         <tr>
                             <td>Tổng tiền</td>
-                            <td>: ₫ 4.000.000</td>
+                            <td>:{{ number_format(session()->get('cartTotal')) }} ₫</td>
                         </tr>
                         <tr>
                             <td>Phương thức thanh toán</td>
@@ -60,19 +62,15 @@
                     <tbody>
                         <tr>
                             <td>Họ Tên</td>
-                            <td>: Nguyễn Văn A</td>
+                            <td>: {{ $order->name }}</td>
                         </tr>
                         <tr>
                             <td>Số điện thoại</td>
-                            <td>: 0123 456 789</td>
+                            <td>: {{ $order->phone }}</td>
                         </tr>
                         <tr>
                             <td>Địa chỉ</td>
-                            <td>: Số nhà B8A ngõ 18 đường Võ Văn Dũng - Hoàng Cầu - Đống Đa </td>
-                        </tr>
-                        <tr>
-                            <td>Thành Phố</td>
-                            <td>: Hà Nội</td>
+                            <td>: {{ $order->address }} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,19 +81,15 @@
                     <tbody>
                         <tr>
                             <td>Họ Tên</td>
-                            <td>: Nguyễn Văn A</td>
+                            <td>: {{ $order->name }}</td>
                         </tr>
                         <tr>
                             <td>Số điện thoại</td>
-                            <td>: 0123 456 789</td>
+                            <td>: {{ $order->phone }}</td>
                         </tr>
                         <tr>
                             <td>Địa chỉ</td>
-                            <td>: Số nhà B8A ngõ 18 đường Võ Văn Dũng - Hoàng Cầu - Đống Đa </td>
-                        </tr>
-                        <tr>
-                            <td>Thành Phố</td>
-                            <td>: Hà Nội</td>
+                            <td>: {{ $order->address }} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -114,25 +108,21 @@
 
                                 <div class="col-md-4 offset-md-4 text-right">TỔNG CỘNG</div>
                             </div>
+                            @forelse ($order->orderDetails()->get() as $item)
                             <div class="list-row d-flex justify-content-between">
-                                <div class="col-md-4">Sản phẩm 1 : color:red ,size:XL</div>
-                                <div class="col-md-4 text-right">x 02</div>
-                                <div class="col-md-4 text-right">₫ 720.000</div>
+                                <div class="col-md-4">{{ $item->product()->first()->name }}</div>
+                                <div class="col-md-4 text-right">x {{ $item->quantity }}</div>
+                                <div class="col-md-4 text-right">{{ number_format($item->quantity * $item->price) }} ₫</div>
 
                             </div>
+                            @empty
 
-                            <div class="list-row d-flex justify-content-between">
-                                <div class="col-md-4">Sản phẩm 1 : color:red ,size:XL</div>
-                                <div class="col-md-4 text-right">x 02</div>
-                                <div class="col-md-4 text-right">₫ 720.000</div>
-
-                            </div>
-
+                            @endforelse
                             <div class="list-row border-bottom-0 d-flex justify-content-between">
                                 <div class="col-md-4">
                                     <h6>Tổng</h6>
                                 </div>
-                                <div class="col-md-4 offset-md-4 text-right">₫ 1.420.000</div>
+                                <div class="col-md-4 offset-md-4 text-right">{{ number_format(session()->get('cartTotal')) }} ₫</div>
                             </div>
                         </div>
                     </div>
@@ -140,5 +130,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection
